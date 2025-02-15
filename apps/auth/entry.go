@@ -38,13 +38,14 @@ func AuthModuleSetup(container *dig.Container) error {
 		utils.RaiseVoid(scope.Provide(core.NewCaptchaStore))
 		utils.RaiseVoid(scope.Provide(controller.NewCaptchaController))
 		utils.RaiseVoid(scope.Provide(controller.NewLoginController))
-		utils.RaiseVoid(scope.Provide(service.NewExampleService))
 		utils.RaiseVoid(scope.Provide(service.NewCaptchaService))
+		utils.RaiseVoid(scope.Provide(service.NewLoginService))
 		utils.RaiseVoid(scope.Provide(repository.NewUserRepository))
 		utils.RaiseVoid(scope.Invoke(func(app *fiber.App, exampleController *controller.LoginController, captchaController *controller.CaptchaController) {
 			group := app.Group("auth")
 			group.Get("/", exampleController.HelloWord)
 			group.Get("/captcha", captchaController.Get)
+			group.Post("/login", exampleController.UsernameLoginWithCaptcha)
 		}))
 	}, utils.DefaultErrorHandler)
 }

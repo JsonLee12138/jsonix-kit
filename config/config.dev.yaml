@@ -4,6 +4,9 @@ logger:
   show-line-number: true
 system:
   routes-print-able: true
+  apifoxable: true
+  swaggerable: false
+  openapiable: false
 i18n:
   default-lng: zh-CN
   lngs:

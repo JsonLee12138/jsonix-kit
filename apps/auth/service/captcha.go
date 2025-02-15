@@ -39,3 +39,10 @@ func (s *CaptchaService) Get() (vo.CaptchaVO, error) {
 	}
 	return result, nil
 }
+
+func (s *CaptchaService) Verify(id, answer string) bool {
+	if !s.cnf.CaptchaConfig.Enable {
+		return true
+	}
+	return s.captchaStore.Verify(id, answer, true)
+}

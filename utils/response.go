@@ -1,4 +1,4 @@
-package core
+package utils
 
 import (
 	"math"
@@ -35,6 +35,7 @@ type BaseResponseVO struct {
 	Code int
 	Msg  string
 	Data any
+	Time time.Time
 }
 
 type Response struct {
@@ -110,7 +111,7 @@ func (r *Response) SetData(data any) *Response {
 	return r
 }
 
-func (r *Response) NewFailWithParse() *Response {
+func (r *Response) NewBadParameters() *Response {
 	return r.NewError("response.fail_with_parse").SetCode(http.StatusUnprocessableEntity)
 }
 func (r *Response) NewBadGateway() *Response {
@@ -137,8 +138,8 @@ func (r *Response) SetHeaderOfStream() *Response {
 	r.Context.Set("Transfer-Encoding", "chunked")
 	return r
 }
-func (r *Response) FailWithParse() error {
-	return r.NewFailWithParse().Return()
+func (r *Response) BadParameters() error {
+	return r.NewBadGateway().Return()
 }
 func (r *Response) Forbidden() error {
 	return r.NewForbidden().Return()
@@ -160,4 +161,14 @@ func (r *Response) Return() error {
 		"data": r.VO.Data,
 		"time": time.Now().Format(timeFormat),
 	})
+}
+
+func NewBadParameters(errs ...error) *fiber.Error {
+	var err string
+	if len(errs) == 0 {
+		err = "parameters_error"
+	} else {
+		err = errs[0].Error()
+	}
+	return fiber.NewError(http.StatusUnprocessableEntity, err)
 }

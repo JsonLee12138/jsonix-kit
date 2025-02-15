@@ -14,10 +14,12 @@ system:
   port: 3001
   db-type: mysql
 i18n:
-  default-lng: zh-CN
-  lngs:
+  default-language: zh-CN
+  accept-languages:
     - zh-CN
-  path: ./locales
+    - en
+  root: ./locales
+  format-bundle-file: json
 cors:
   allow-methods:
     - GET

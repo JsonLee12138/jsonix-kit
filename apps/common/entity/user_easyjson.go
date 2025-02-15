@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjsonBe3ccb1fDecodeJsonServerKitAppsCommonEntity(in *jlexer.Lexer, out *User) {
+func easyjson9e1087fdDecodeJsonServerKitAppsCommonEntity(in *jlexer.Lexer, out *User) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -44,6 +44,8 @@ func easyjsonBe3ccb1fDecodeJsonServerKitAppsCommonEntity(in *jlexer.Lexer, out *
 			out.Phone = string(in.String())
 		case "email":
 			out.Email = string(in.String())
+		case "password":
+			out.Password = string(in.StringIntern())
 		case "enable":
 			out.Enable = bool(in.Bool())
 		case "id":
@@ -61,7 +63,7 @@ func easyjsonBe3ccb1fDecodeJsonServerKitAppsCommonEntity(in *jlexer.Lexer, out *
 		case "updatedBy":
 			out.UpdatedBy = string(in.String())
 		case "deletedBy":
-			out.DeletedBy = string(in.String())
+			out.DeletedBy = string(in.StringIntern())
 		default:
 			in.SkipRecursive()
 		}
@@ -72,7 +74,7 @@ func easyjsonBe3ccb1fDecodeJsonServerKitAppsCommonEntity(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBe3ccb1fEncodeJsonServerKitAppsCommonEntity(out *jwriter.Writer, in User) {
+func easyjson9e1087fdEncodeJsonServerKitAppsCommonEntity(out *jwriter.Writer, in User) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -95,6 +97,11 @@ func easyjsonBe3ccb1fEncodeJsonServerKitAppsCommonEntity(out *jwriter.Writer, in
 		const prefix string = ",\"email\":"
 		out.RawString(prefix)
 		out.String(string(in.Email))
+	}
+	{
+		const prefix string = ",\"password\":"
+		out.RawString(prefix)
+		out.String(string(in.Password))
 	}
 	{
 		const prefix string = ",\"enable\":"
@@ -137,23 +144,23 @@ func easyjsonBe3ccb1fEncodeJsonServerKitAppsCommonEntity(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v User) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBe3ccb1fEncodeJsonServerKitAppsCommonEntity(&w, v)
+	easyjson9e1087fdEncodeJsonServerKitAppsCommonEntity(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v User) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBe3ccb1fEncodeJsonServerKitAppsCommonEntity(w, v)
+	easyjson9e1087fdEncodeJsonServerKitAppsCommonEntity(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *User) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBe3ccb1fDecodeJsonServerKitAppsCommonEntity(&r, v)
+	easyjson9e1087fdDecodeJsonServerKitAppsCommonEntity(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *User) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBe3ccb1fDecodeJsonServerKitAppsCommonEntity(l, v)
+	easyjson9e1087fdDecodeJsonServerKitAppsCommonEntity(l, v)
 }

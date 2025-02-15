@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"errors"
 	"json-server-kit/apps/auth/service"
 	"json-server-kit/middleware"
-	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -18,10 +18,17 @@ func NewCaptchaController(captchaService *service.CaptchaService) *CaptchaContro
 	}
 }
 
+// @Summary 获取验证码
+// @Description 获取验证码
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Success 200 {object} utils.BaseResponseVO{data=vo.CaptchaVO}
+// @Router /auth/captcha [get]
 func (s *CaptchaController) Get(c *fiber.Ctx) error {
 	result, err := s.captchaService.Get()
 	if err != nil {
-		return fiber.NewError(http.StatusInternalServerError, "Failed to generate captcha")
+		return errors.New("generate_captcha_failed")
 	}
 	c.Locals(middleware.ResponseDataKey, result)
 	return nil

@@ -1,47 +1,64 @@
 package main
 
 import (
+	"fmt"
 	"json-server-kit/apps/auth"
 	"json-server-kit/apps/example"
+	auto_migrate "json-server-kit/auto_migrate_local"
 	"json-server-kit/middleware"
+	"net/http"
 
 	"json-server-kit/configs"
 
-	selfCore "json-server-kit/core"
+	utils2 "json-server-kit/utils"
 
 	"github.com/JsonLee12138/json-server/pkg/core"
 	"github.com/JsonLee12138/json-server/pkg/utils"
 	"github.com/go-redis/redis/v8"
-	"github.com/gofiber/contrib/fiberi18n/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/ua-parser/uap-go/uaparser"
 	"go.uber.org/dig"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
-//TIP <p>To run your code, right-click the code and select <b>Run</b>.</p> <p>Alternatively, click
-// the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.</p>
-
 func main() {
-	//TIP <p>Press <shortcut actionId="ShowIntentionActions"/> when your caret is at the underlined text
-	// to see how GoLand suggests fixing the warning.</p><p>Alternatively, if available, click the lightbulb to view possible fixes.</p>
 	app := core.NewApp()
 	configInstance := utils.Raise(core.NewConfig())
-	app.Use(fiberi18n.New(&fiberi18n.Config{
-		RootPath: "./locales",
-	}))
-	app.Use(middleware.Response())
-	core.Validator.RegisterValidation("phone", selfCore.ValidatePhoneNumber)
 	var cnf configs.Config
 	configInstance.Bind(&cnf)
+	core.Validator.RegisterValidation("phone", utils2.ValidatePhoneNumber)
+	uparser := utils.Raise(uaparser.New("./config/regexes.yaml"))
+	logger := core.NewLogger(cnf.Logger)
+	app.Use(middleware.BotDetection(uparser))
+	app.Use(middleware.I18n(cnf.I18n))
+	app.Use(middleware.Response())
+	app.Use(middleware.Logger(func(vo middleware.LogVO) {
+		v, _ := core.MarshalForFiber(vo)
+		if vo.Code == http.StatusOK {
+			logger.Info(string(v))
+		} else {
+			logger.Error(string(v))
+		}
+	}))
+	mysql := core.NewGormMysql(cnf.Mysql)
+	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
+	fmt.Println("数据库自动迁移完成")
 	container := dig.New()
+	utils.RaiseVoid(container.Provide(func() *zap.Logger {
+		return logger
+	}))
 	utils.RaiseVoid(container.Provide(func() *configs.Config {
 		return &cnf
+	}))
+	utils.RaiseVoid(container.Provide(func() *uaparser.Parser {
+		return uparser
 	}))
 	utils.RaiseVoid(container.Provide(func() *fiber.App {
 		return app
 	}))
 	utils.RaiseVoid(container.Provide(func(config *configs.Config) *gorm.DB {
-		return core.NewGormMysql(config.Mysql)
+		return mysql
 	}))
 	utils.RaiseVoid(container.Provide(func(config *configs.Config) *redis.Client {
 		return core.NewRedis(config.Redis)
