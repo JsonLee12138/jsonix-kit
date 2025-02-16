@@ -1,4 +1,4 @@
-package core
+package utils
 
 import (
 	"errors"
@@ -21,7 +21,7 @@ type UserClaims struct {
 
 type BaseClaims struct {
 	UserClaims UserClaims
-	BufferTime time.Time
+	BufferTime *jwt.NumericDate
 	DeviceId   string
 	jwt.RegisteredClaims
 }
@@ -58,7 +58,7 @@ func (j *JWT) CreateClaims(claims BaseClaims) BaseClaims {
 
 	return BaseClaims{
 		UserClaims: claims.UserClaims,
-		BufferTime: time.Now().Add(bufferTime),
+		BufferTime: jwt.NewNumericDate(time.Now().Add(bufferTime)),
 		DeviceId:   claims.DeviceId,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    j.Config.Issuer,

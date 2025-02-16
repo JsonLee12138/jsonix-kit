@@ -30,9 +30,8 @@ func main() {
 	core.Validator.RegisterValidation("phone", utils2.ValidatePhoneNumber)
 	uparser := utils.Raise(uaparser.New("./config/regexes.yaml"))
 	logger := core.NewLogger(cnf.Logger)
+	app.Use(middleware.Cors(&cnf.Cors))
 	app.Use(middleware.BotDetection(uparser))
-	app.Use(middleware.I18n(cnf.I18n))
-	app.Use(middleware.Response())
 	app.Use(middleware.Logger(func(vo middleware.LogVO) {
 		v, _ := core.MarshalForFiber(vo)
 		if vo.Code == http.StatusOK {
@@ -41,6 +40,12 @@ func main() {
 			logger.Error(string(v))
 		}
 	}))
+	if core.Mode() != core.ProMode {
+		app.Use(middleware.Cache())
+	}
+	app.Use(middleware.I18n(cnf.I18n))
+	app.Use(middleware.Response())
+	app.Use(middleware.Compress())
 	mysql := core.NewGormMysql(cnf.Mysql)
 	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
 	fmt.Println("数据库自动迁移完成")
