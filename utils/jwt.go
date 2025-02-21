@@ -5,7 +5,7 @@ import (
 	"json-server-kit/configs"
 	"time"
 
-	"github.com/JsonLee12138/json-server/pkg/utils"
+	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/rs/xid"
 	"golang.org/x/sync/singleflight"

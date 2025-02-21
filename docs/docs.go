@@ -95,6 +95,64 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/common/dict/types": {
+            "get": {
+                "description": "获取字典类型",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "summary": "获取字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "code",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.BaseResponseVO"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/entity.DictType"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -115,6 +173,118 @@ const docTemplate = `{
                 },
                 "username": {
                     "description": "用户名",
+                    "type": "string"
+                }
+            }
+        },
+        "entity.DictItem": {
+            "type": "object",
+            "properties": {
+                "classList": {
+                    "description": "样式列表",
+                    "type": "string"
+                },
+                "color": {
+                    "description": "颜色",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "createdBy": {
+                    "description": "创建人",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "字典项描述",
+                    "type": "string"
+                },
+                "dictTypeId": {
+                    "description": "字典类型ID",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "isDefault": {
+                    "description": "是否默认",
+                    "type": "boolean"
+                },
+                "key": {
+                    "description": "字典项键",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "字典项名称",
+                    "type": "string"
+                },
+                "sort": {
+                    "description": "排序",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "状态(1: 正常, 0: 禁用)",
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "description": "更新人",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "字典项值",
+                    "type": "string"
+                }
+            }
+        },
+        "entity.DictType": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "字典编码",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "createdBy": {
+                    "description": "创建人",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.DictItem"
+                    }
+                },
+                "name": {
+                    "description": "字典名称",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "updatedBy": {
+                    "description": "更新人",
                     "type": "string"
                 }
             }

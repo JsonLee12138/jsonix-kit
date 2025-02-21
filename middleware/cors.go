@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/JsonLee12138/json-server/pkg/configs"
+	"github.com/JsonLee12138/jsonix/pkg/configs"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )

@@ -7,3 +7,7 @@ type JWTConfig struct {
 	Issuer        string `mapstructure:"issuer" json:"issuer" yaml:"issuer" toml:"issuer"`
 	SigningMethod string `mapstructure:"signing-method" json:"signing-method" yaml:"signing-method" toml:"signing-method"` // 可选值 'HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512', 'PS256', 'PS384', 'PS512'
 }
+
+type JWTAuthConfig struct {
+	ExcludePaths []string `mapstructure:"exclude-paths" json:"exclude-paths" yaml:"exclude-paths" toml:"exclude-paths"`
+}

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/JsonLee12138/json-server/pkg/core"
+	"github.com/JsonLee12138/jsonix/pkg/core"
 	"gorm.io/gorm"
 )
 
@@ -15,7 +15,7 @@ type User struct {
 	Phone    string `json:"phone" form:"phone" gorm:"index" validate:"phone"`             // 手机号
 	Email    string `json:"email" form:"email" validate:"omitempty,email"`                // 邮箱
 	Password string `json:"password,intern" form:"-" swaggerignore:"true"`                // 密码
-	Enable   bool   `json:"enable" form:"enable" gorm:"index;default:1;type:tinyint(1)"`  // 是否启用
+	Status   bool   `json:"enable" form:"enable" gorm:"index;default:1;type:tinyint(1)"`  // 是否启用
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) error {

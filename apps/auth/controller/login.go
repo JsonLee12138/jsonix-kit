@@ -7,7 +7,7 @@ import (
 	"json-server-kit/middleware"
 	"json-server-kit/utils"
 
-	utils2 "github.com/JsonLee12138/json-server/pkg/utils"
+	utils2 "github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/gofiber/fiber/v2"
 )
 

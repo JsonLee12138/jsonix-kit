@@ -1,21 +1,20 @@
 package controller
 
 import (
-	exampleService "json-server-kit/apps/example/service"
-
 	"github.com/gofiber/fiber/v2"
+	"json-server-kit/apps/example/service"
 )
 
 type ExampleController struct {
-	service *exampleService.ExampleService
+    service *service.ExampleService
 }
 
-func NewExampleController(service *exampleService.ExampleService) *ExampleController {
+func NewExampleController(service *service.ExampleService) *ExampleController {
 	return &ExampleController{
-		service,
+	    service,
 	}
 }
 
-func (c *ExampleController) HelloWord(ctx *fiber.Ctx) error {
-	return ctx.SendString(c.service.HelloWord())
+func (c *ExampleController) HelloWorld(ctx *fiber.Ctx) error {
+	return ctx.SendString(c.service.HelloWorld())
 }

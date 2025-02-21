@@ -14,6 +14,88 @@ definitions:
         description: 用户名
         type: string
     type: object
+  entity.DictItem:
+    properties:
+      classList:
+        description: 样式列表
+        type: string
+      color:
+        description: 颜色
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      desc:
+        description: 字典项描述
+        type: string
+      dictTypeId:
+        description: 字典类型ID
+        type: integer
+      id:
+        description: 主键ID
+        type: integer
+      isDefault:
+        description: 是否默认
+        type: boolean
+      key:
+        description: 字典项键
+        type: string
+      name:
+        description: 字典项名称
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: '状态(1: 正常, 0: 禁用)'
+        type: boolean
+      updatedAt:
+        description: 更新时间
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+      value:
+        description: 字典项值
+        type: string
+    type: object
+  entity.DictType:
+    properties:
+      code:
+        description: 字典编码
+        type: string
+      createdAt:
+        description: 创建时间
+        type: string
+      createdBy:
+        description: 创建人
+        type: string
+      desc:
+        description: 描述
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      items:
+        items:
+          $ref: '#/definitions/entity.DictItem'
+        type: array
+      name:
+        description: 字典名称
+        type: string
+      status:
+        description: 状态
+        type: boolean
+      updatedAt:
+        description: 更新时间
+        type: string
+      updatedBy:
+        description: 更新人
+        type: string
+    type: object
   entity.User:
     properties:
       createdAt:
@@ -119,4 +201,39 @@ paths:
       summary: 用户名密码登录
       tags:
       - auth
+  /common/dict/types:
+    get:
+      consumes:
+      - application/json
+      description: 获取字典类型
+      parameters:
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: code
+        in: query
+        name: code
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponseVO'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.DictType'
+                  type: array
+              type: object
+      summary: 获取字典类型
+      tags:
+      - common
 swagger: "2.0"

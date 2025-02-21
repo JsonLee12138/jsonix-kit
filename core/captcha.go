@@ -7,7 +7,7 @@ import (
 
 	"json-server-kit/configs"
 
-	"github.com/JsonLee12138/json-server/pkg/utils"
+	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/go-redis/redis/v8"
 )
 

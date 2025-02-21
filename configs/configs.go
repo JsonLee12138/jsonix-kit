@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/JsonLee12138/json-server/pkg/configs"
+	"github.com/JsonLee12138/jsonix/pkg/configs"
 )
 
 type Config struct {
@@ -12,4 +12,7 @@ type Config struct {
 	I18n          configs.I18nConfig   `mapstructure:"i18n" json:"i18n" yaml:"i18n" toml:"i18n"`
 	Logger        configs.LogConfig    `mapstructure:"logger" json:"logger" yaml:"logger" toml:"logger"`
 	Cors          configs.CorsConfig   `mapstructure:"cors" json:"cors" yaml:"cors" toml:"cors"`
+	RefreshJWT    JWTConfig            `mapstructure:"refresh-jwt" json:"refresh-jwt" yaml:"refresh-jwt" toml:"refresh-jwt"`
+	AccessJWT     JWTConfig            `mapstructure:"access-jwt" json:"access-jwt" yaml:"access-jwt" toml:"access-jwt"`
+	JWTAuth       JWTAuthConfig        `mapstructure:"jwt-auth" json:"jwt-auth" yaml:"jwt-auth" toml:"jwt-auth"`
 }

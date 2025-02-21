@@ -47,7 +47,7 @@ func easyjson9e1087fdDecodeJsonServerKitAppsCommonEntity(in *jlexer.Lexer, out *
 		case "password":
 			out.Password = string(in.StringIntern())
 		case "enable":
-			out.Enable = bool(in.Bool())
+			out.Status = bool(in.Bool())
 		case "id":
 			out.ID = string(in.String())
 		case "createdAt":
@@ -106,7 +106,7 @@ func easyjson9e1087fdEncodeJsonServerKitAppsCommonEntity(out *jwriter.Writer, in
 	{
 		const prefix string = ",\"enable\":"
 		out.RawString(prefix)
-		out.Bool(bool(in.Enable))
+		out.Bool(bool(in.Status))
 	}
 	{
 		const prefix string = ",\"id\":"

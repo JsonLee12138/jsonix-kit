@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"time"
 
 	"json-server-kit/apps/auth/model/enum"
@@ -17,10 +18,11 @@ import (
 )
 
 type JWTAuthConfig struct {
-	RefreshCnf configs.JWTConfig
-	AccessCnf  configs.JWTConfig
-	Redis      *redis.Client
-	Uaparser   *uaparser.Parser
+	RefreshCnf   configs.JWTConfig
+	AccessCnf    configs.JWTConfig
+	Redis        *redis.Client
+	Uaparser     *uaparser.Parser
+	ExcludePaths []string
 }
 
 func genRefreshKey(deviceId string, userId string, client *uaparser.Client) string {
@@ -41,6 +43,9 @@ func genAccessTokenKey(deviceId string, userId string, client *uaparser.Client) 
 
 func JWTAuth(cnf JWTAuthConfig) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		if slices.Contains(cnf.ExcludePaths, c.Path()) {
+			return c.Next()
+		}
 		accessToken := c.Get("Authorization")
 		refreshToken := c.Cookies("refresh_token")
 		if accessToken == "" || refreshToken == "" {

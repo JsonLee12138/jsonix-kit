@@ -5,15 +5,15 @@ import (
 )
 
 type ExampleService struct {
-	repository *repository.ExampleRepository
+    repository *repository.ExampleRepository
 }
 
-func NewExampleService() *ExampleService {
+func NewExampleService(repository *repository.ExampleRepository) *ExampleService {
 	return &ExampleService{
-		//repository,
+	    repository,
 	}
 }
 
-func (service *ExampleService) HelloWord() string {
-	return "Hello Word!"
+func (service *ExampleService) HelloWorld() string {
+	return "Hello World!"
 }

@@ -54,3 +54,9 @@ captcha:
   height: 80
   noise-count: 5
   show-line-options: 2
+jwt-auth:
+  exclude-paths:
+    - /auth/login
+    - /auth/register
+    - /auth/refresh-token
+    - /auth/captcha

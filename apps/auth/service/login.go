@@ -50,7 +50,7 @@ func (service *LoginService) UsernameLoginWithCaptcha(c *fiber.Ctx, loginDTO dto
 		}
 		return nil, err
 	}
-	if !user.Enable {
+	if !user.Status {
 		return nil, errors.New("user_disabled")
 	}
 
@@ -109,7 +109,7 @@ func (service *LoginService) GetUAParser(userAgent string) *uaparser.Client {
 }
 
 func (service *LoginService) UserEnabled(user *entity.User) error {
-	if !user.Enable {
+	if !user.Status {
 		return errors.New("user_disabled")
 	}
 	return nil

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"json-server-kit/apps/auth"
+	"json-server-kit/apps/common"
 	"json-server-kit/apps/example"
 	auto_migrate "json-server-kit/auto_migrate_local"
 	"json-server-kit/middleware"
@@ -12,8 +13,8 @@ import (
 
 	utils2 "json-server-kit/utils"
 
-	"github.com/JsonLee12138/json-server/pkg/core"
-	"github.com/JsonLee12138/json-server/pkg/utils"
+	"github.com/JsonLee12138/jsonix/pkg/core"
+	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
 	"github.com/ua-parser/uap-go/uaparser"
@@ -32,6 +33,14 @@ func main() {
 	logger := core.NewLogger(cnf.Logger)
 	app.Use(middleware.Cors(&cnf.Cors))
 	app.Use(middleware.BotDetection(uparser))
+	redisClient := core.NewRedis(cnf.Redis)
+	app.Use(middleware.JWTAuth(middleware.JWTAuthConfig{
+		RefreshCnf:   cnf.RefreshJWT,
+		AccessCnf:    cnf.AccessJWT,
+		Redis:        redisClient,
+		Uaparser:     uparser,
+		ExcludePaths: cnf.JWTAuth.ExcludePaths,
+	}))
 	app.Use(middleware.Logger(func(vo middleware.LogVO) {
 		v, _ := core.MarshalForFiber(vo)
 		if vo.Code == http.StatusOK {
@@ -62,13 +71,14 @@ func main() {
 	utils.RaiseVoid(container.Provide(func() *fiber.App {
 		return app
 	}))
-	utils.RaiseVoid(container.Provide(func(config *configs.Config) *gorm.DB {
+	utils.RaiseVoid(container.Provide(func() *gorm.DB {
 		return mysql
 	}))
-	utils.RaiseVoid(container.Provide(func(config *configs.Config) *redis.Client {
-		return core.NewRedis(config.Redis)
+	utils.RaiseVoid(container.Provide(func() *redis.Client {
+		return redisClient
 	}))
 	utils.RaiseVoid(example.ExampleModuleSetup(container))
 	utils.RaiseVoid(auth.AuthModuleSetup(container))
+	utils.RaiseVoid(common.CommonModuleSetup(container))
 	core.StartApp(app)
 }

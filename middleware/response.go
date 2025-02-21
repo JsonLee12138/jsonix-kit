@@ -6,7 +6,7 @@ import (
 
 	utils2 "json-server-kit/utils"
 
-	"github.com/JsonLee12138/json-server/pkg/utils"
+	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/gofiber/contrib/fiberi18n/v2"
 	"github.com/gofiber/fiber/v2"
 )
