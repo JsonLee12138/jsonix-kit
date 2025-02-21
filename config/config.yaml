@@ -37,7 +37,7 @@ apifox:
   project-id: aaa
   # apifox 版本, 枚举值: 2024-03-28
   # apifox version, enum value: 2024-03-28
-  api-version: 2024-03-28
+  api-version: "2024-03-28"
   # apifox token
   # apifox token
   token: aaa
