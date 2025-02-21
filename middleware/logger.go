@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-//go:generate easyjson -all ./logger.go
+//go:generate easyjson -all ./
 
 type LogVO struct {
 	Time      time.Time

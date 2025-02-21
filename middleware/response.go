@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	utils2 "json-server-kit/utils"
+	utils2 "jsonix-kit/utils"
 
 	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/gofiber/contrib/fiberi18n/v2"

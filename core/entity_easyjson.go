@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjson163c17a9DecodeJsonServerKitCore(in *jlexer.Lexer, out *BaseEntityWithUuid) {
+func easyjson163c17a9DecodeJsonixKitCore(in *jlexer.Lexer, out *BaseEntityWithUuid) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -62,7 +62,7 @@ func easyjson163c17a9DecodeJsonServerKitCore(in *jlexer.Lexer, out *BaseEntityWi
 		in.Consumed()
 	}
 }
-func easyjson163c17a9EncodeJsonServerKitCore(out *jwriter.Writer, in BaseEntityWithUuid) {
+func easyjson163c17a9EncodeJsonixKitCore(out *jwriter.Writer, in BaseEntityWithUuid) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -102,27 +102,27 @@ func easyjson163c17a9EncodeJsonServerKitCore(out *jwriter.Writer, in BaseEntityW
 // MarshalJSON supports json.Marshaler interface
 func (v BaseEntityWithUuid) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjson163c17a9EncodeJsonServerKitCore(&w, v)
+	easyjson163c17a9EncodeJsonixKitCore(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v BaseEntityWithUuid) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjson163c17a9EncodeJsonServerKitCore(w, v)
+	easyjson163c17a9EncodeJsonixKitCore(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *BaseEntityWithUuid) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjson163c17a9DecodeJsonServerKitCore(&r, v)
+	easyjson163c17a9DecodeJsonixKitCore(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *BaseEntityWithUuid) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjson163c17a9DecodeJsonServerKitCore(l, v)
+	easyjson163c17a9DecodeJsonixKitCore(l, v)
 }
-func easyjson163c17a9DecodeJsonServerKitCore1(in *jlexer.Lexer, out *BaseEntityWithID) {
+func easyjson163c17a9DecodeJsonixKitCore1(in *jlexer.Lexer, out *BaseEntityWithID) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -167,7 +167,7 @@ func easyjson163c17a9DecodeJsonServerKitCore1(in *jlexer.Lexer, out *BaseEntityW
 		in.Consumed()
 	}
 }
-func easyjson163c17a9EncodeJsonServerKitCore1(out *jwriter.Writer, in BaseEntityWithID) {
+func easyjson163c17a9EncodeJsonixKitCore1(out *jwriter.Writer, in BaseEntityWithID) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -207,27 +207,27 @@ func easyjson163c17a9EncodeJsonServerKitCore1(out *jwriter.Writer, in BaseEntity
 // MarshalJSON supports json.Marshaler interface
 func (v BaseEntityWithID) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjson163c17a9EncodeJsonServerKitCore1(&w, v)
+	easyjson163c17a9EncodeJsonixKitCore1(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v BaseEntityWithID) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjson163c17a9EncodeJsonServerKitCore1(w, v)
+	easyjson163c17a9EncodeJsonixKitCore1(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *BaseEntityWithID) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjson163c17a9DecodeJsonServerKitCore1(&r, v)
+	easyjson163c17a9DecodeJsonixKitCore1(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *BaseEntityWithID) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjson163c17a9DecodeJsonServerKitCore1(l, v)
+	easyjson163c17a9DecodeJsonixKitCore1(l, v)
 }
-func easyjson163c17a9DecodeJsonServerKitCore2(in *jlexer.Lexer, out *BaseEntity) {
+func easyjson163c17a9DecodeJsonixKitCore2(in *jlexer.Lexer, out *BaseEntity) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -270,7 +270,7 @@ func easyjson163c17a9DecodeJsonServerKitCore2(in *jlexer.Lexer, out *BaseEntity)
 		in.Consumed()
 	}
 }
-func easyjson163c17a9EncodeJsonServerKitCore2(out *jwriter.Writer, in BaseEntity) {
+func easyjson163c17a9EncodeJsonixKitCore2(out *jwriter.Writer, in BaseEntity) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -305,23 +305,23 @@ func easyjson163c17a9EncodeJsonServerKitCore2(out *jwriter.Writer, in BaseEntity
 // MarshalJSON supports json.Marshaler interface
 func (v BaseEntity) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjson163c17a9EncodeJsonServerKitCore2(&w, v)
+	easyjson163c17a9EncodeJsonixKitCore2(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v BaseEntity) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjson163c17a9EncodeJsonServerKitCore2(w, v)
+	easyjson163c17a9EncodeJsonixKitCore2(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *BaseEntity) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjson163c17a9DecodeJsonServerKitCore2(&r, v)
+	easyjson163c17a9DecodeJsonixKitCore2(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *BaseEntity) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjson163c17a9DecodeJsonServerKitCore2(l, v)
+	easyjson163c17a9DecodeJsonixKitCore2(l, v)
 }

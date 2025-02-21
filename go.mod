@@ -1,4 +1,4 @@
-module json-server-kit
+module jsonix-kit
 
 go 1.23
 

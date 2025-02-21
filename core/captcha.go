@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"json-server-kit/configs"
+	"jsonix-kit/configs"
 
 	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/go-redis/redis/v8"

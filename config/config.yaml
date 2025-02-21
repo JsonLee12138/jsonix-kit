@@ -1,25 +1,202 @@
-logger:
-  compress: true
-  max-age: 7
-  max-size: 100
-  max-backups: 10
-  director: ./logs
-  log-in-terminal: false
-  show-line-number: false
+# 相关配置查询 fiber 文档(https://docs.gofiber.io/api/fiber)
+# Related configuration queries fiber documentation (https://docs.gofiber.io/api/fiber)
 system:
-  app-name: json-server
+  app-name: jsonix-kit
   ip-validation-able: true
+  routes-print-able: true
   query-split-able: true
   proxy-check-able: true
-  port: 3001
-  db-type: mysql
+  router-prefix: /api
+  port: 3000
+  db-type: mysql # mysql, postgres, sqlite, sqlserver, tidb, clickhouse
+  # 是否启用swagger
+  # enable swagger
+  swaggerable: true
+  # 是否启用apifox
+  # enable apifox
+  apifoxable: false
+  # 是否启用openapi
+  # enable openapi
+  openapiable: false
+
+# 相关配置查询 fiber 文档(https://docs.gofiber.io/contrib/swagger/#config)
+# Related configuration queries fiber documentation (https://docs.gofiber.io/contrib/swagger/#config)
+swagger:
+  base-path: /
+  file-path: ./docs/swagger.json
+  path: /swagger
+  title: jsonix-kit
+  cache-age: 3600
+
+apifox:
+  # 接口文档语言, 默认值: zh-CN, 枚举值: zh-CN, en-US
+  # interface document language, default value: zh-CN, enum value: zh-CN, en-US
+  locale: zh-CN
+  # apifox 接口文档项目ID
+  # apifox interface document project ID
+  project-id: aaa
+  # apifox 版本, 枚举值: 2024-03-28
+  # apifox version, enum value: 2024-03-28
+  api-version: 2024-03-28
+  # apifox token
+  # apifox token
+  token: aaa
+  # 目标端点文件夹ID
+  # target endpoint folder ID
+  target-endpoint-folder-id: ''
+  # 目标模式文件夹ID
+  # target schema folder ID
+  target-schema-folder-id: ''
+  # 接口文档覆盖行为, 默认值: OVERWRITE_EXISTING, 枚举值: OVERWRITE_EXISTING, AUTO_MERGE, KEEP_EXISTING, CREATE_NEW
+  # interface document overwrite behavior, default value: OVERWRITE_EXISTING, enum value: OVERWRITE_EXISTING, AUTO_MERGE, KEEP_EXISTING, CREATE_NEW
+  endpoint-overwrite-behavior: OVERWRITE_EXISTING
+  # 接口文档覆盖行为, 默认值: OVERWRITE_EXISTING, 枚举值: OVERWRITE_EXISTING, AUTO_MERGE, KEEP_EXISTING, CREATE_NEW
+  # interface document overwrite behavior, default value: OVERWRITE_EXISTING, enum value: OVERWRITE_EXISTING, AUTO_MERGE, KEEP_EXISTING, CREATE_NEW
+  schema-overwrite-behavior: OVERWRITE_EXISTING
+  # 是否更新更改的接口的文件夹, 默认设置为 false
+  # whether to update the folder of changed endpoints, default is false
+  update-folder-of-changed-endpoint: false
+  # 是否将基础路径添加到接口的路径中，默认设置为 false。我们建议将其设置为 false，这样基础路径可以保留在“环境面板”中，而不是每个接口内部。如果希望在接口路径中添加路径前缀，则应将其设置为 true
+  # whether to add the base path to the interface path, default is false. We recommend setting it to false so that the base path can be retained in the "environment panel" instead of inside each interface. If you want to add a path prefix to the interface path, you should set it to true
+  prepend-base-path: false
+
+logger:
+  # 日志目录
+  # log directory
+  director: ./logs
+  # 日志消息键
+  # log message key
+  message-key: message
+  # 日志级别键
+  # log level key
+  level-key: level
+  # 日志时间键
+  # log time key
+  time-key: time
+  # 日志名称键
+  # log name key
+  name-key: name
+  # 日志调用者键
+  # log caller key
+  caller-key: caller
+  # 日志行结束符
+  # log line ending
+  line-ending: \n
+  # 堆栈跟踪键
+  # stacktrace key
+  stacktrace-key: stacktrace
+  # 日志级别
+  # log level
+  level: info
+  # 日志编码级别
+  # log encoding level
+  encode-level: color
+  # 日志前缀
+  # log prefix
+  prefix: ""
+  # 日志时间格式
+  # log time format
+  time-format: YYYY/MM/DD - HH:mm:ss
+  # 日志格式
+  # log format
+  format: json
+  # 是否在终端打印日志
+  # whether to print logs in the terminal
+  log-in-terminal: false
+  # 日志最大保存时间
+  # log maximum save time
+  max-age: 7
+  # 日志最大保存大小
+  # log maximum save size
+  max-size: 100
+  # 是否压缩日志
+  # whether to compress logs
+  compress: true
+  # 日志最大保存数量
+  # log maximum save number
+  max-backups: 10
+  # 是否显示行号
+  # whether to show line number
+  show-line-number: false
+
 i18n:
+  # 默认语言
+  # default language
   default-language: zh-CN
+  # 接受的语言
+  # accepted languages
   accept-languages:
     - zh-CN
     - en
+  # 根目录
+  # root directory
   root: ./locales
+  # 格式化文件(json, yaml)
+  # format file(json, yaml)
   format-bundle-file: json
+
+mysql:
+  # 设置时间的位置, 默认值: Local
+  # set the location of the time, default value: Local
+  loc: ""
+  # 字符集
+  # charset
+  charset: utf8mb4
+  # 是否解析时间(True, False)
+  # whether to parse time(True, False)
+  parse-time: True
+  # 高级配置
+  # advanced configuration
+  config: ""
+  # 主机
+  # host
+  host: ""
+  # 端口
+  # port
+  port: 3306
+  # 用户名
+  # username
+  username: root
+  # 密码
+  # password
+  password: ""
+  # 数据库名称
+  # database name
+  db-name: ""
+  # 数据库引擎，默认InnoDB
+  # database engine, default InnoDB
+  engine: InnoDB
+  # 全局日志模式
+  # global log mode
+  log-mode: info
+  # 最大空闲连接数
+  # maximum idle connections
+  max-idle-conns: 10
+  # 最大连接数
+  # maximum connections
+  max-open-conns: 100
+  # 是否开启全局禁用复数，true表示开启
+  # whether to enable global disable plural, true means enable
+  singular: false
+  # 默认字符串大小
+  # default string size
+  default-string-size: 191
+  # 是否根据版本自动配置，默认false
+  # whether to automatically configure according to the version, default is false
+  skip-initialize-with-version: false
+  # 是否支持重命名列，false表示不支持, MySQL 8 之前的数据库和 MariaDB 不支持重命名列
+  # whether to support renaming columns, false means not supported, MySQL 8 and earlier versions of the database and MariaDB do not support renaming columns
+  dont-support-rename-column: true
+  # 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
+  # when renaming indexes, use the delete and create method, MySQL 5.7 and earlier versions of the database and MariaDB do not support renaming indexes
+  dont-support-rename-index: true
+
+redis:
+  host: ""
+  port: 6379
+  password: ""
+  db: 0
+
 cors:
   allow-methods:
     - GET
@@ -33,30 +210,3 @@ cors:
   max-age: 12h
   allow-origins:
     - "*"
-mysql:
-  host: ""
-  port: 3306
-  username: root
-  password: ""
-  db-name: ""
-  default-string-size: 191
-  dont-support-rename-column: true
-  dont-support-rename-index: true
-redis:
-  host: ""
-  port: 6379
-  password: ""
-  db: 0
-captcha:
-  enable: true
-  max-age: 3
-  width: 240
-  height: 80
-  noise-count: 5
-  show-line-options: 2
-jwt-auth:
-  exclude-paths:
-    - /auth/login
-    - /auth/register
-    - /auth/refresh-token
-    - /auth/captcha

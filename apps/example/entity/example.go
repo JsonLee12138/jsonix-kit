@@ -5,6 +5,9 @@ import (
 	"gorm.io/gorm"
 )
 
+//go:generate easyjson -all ./
+
+// @AutoMigrate
 type ExampleEntity struct {
 	core.BaseEntityWithUuid
 }

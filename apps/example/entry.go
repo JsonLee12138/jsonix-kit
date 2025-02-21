@@ -1,9 +1,9 @@
 package example
 
 import (
-	"json-server-kit/apps/example/controller"
-	"json-server-kit/apps/example/service"
-	"json-server-kit/apps/example/repository"
+	"jsonix-kit/apps/example/controller"
+	"jsonix-kit/apps/example/repository"
+	"jsonix-kit/apps/example/service"
 
 	"github.com/JsonLee12138/jsonix/pkg/utils"
 	"github.com/gofiber/fiber/v2"
@@ -34,11 +34,11 @@ func RouterSetup(app *fiber.App, exampleController *controller.ExampleController
 }
 
 func ExampleModuleSetup(container *dig.Container) error {
-    return utils.TryCatchVoid(func() {
-      scope := container.Scope("example")
-      utils.RaiseVoid(ProvideController(scope))
-			utils.RaiseVoid(ProvideService(scope))
-			utils.RaiseVoid(ProvideRepository(scope))
-      utils.RaiseVoid(scope.Invoke(RouterSetup))
-    }, utils.DefaultErrorHandler)
+	return utils.TryCatchVoid(func() {
+		scope := container.Scope("example")
+		utils.RaiseVoid(ProvideController(scope))
+		utils.RaiseVoid(ProvideService(scope))
+		utils.RaiseVoid(ProvideRepository(scope))
+		utils.RaiseVoid(scope.Invoke(RouterSetup))
+	}, utils.DefaultErrorHandler)
 }

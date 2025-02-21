@@ -2,16 +2,12 @@ package main
 
 import (
 	"fmt"
-	"json-server-kit/apps/auth"
-	"json-server-kit/apps/common"
-	"json-server-kit/apps/example"
-	auto_migrate "json-server-kit/auto_migrate_local"
-	"json-server-kit/middleware"
+	"jsonix-kit/apps/example"
+	"jsonix-kit/auto_migrate"
+	"jsonix-kit/middleware"
 	"net/http"
 
-	"json-server-kit/configs"
-
-	utils2 "json-server-kit/utils"
+	"jsonix-kit/configs"
 
 	"github.com/JsonLee12138/jsonix/pkg/core"
 	"github.com/JsonLee12138/jsonix/pkg/utils"
@@ -28,19 +24,10 @@ func main() {
 	configInstance := utils.Raise(core.NewConfig())
 	var cnf configs.Config
 	configInstance.Bind(&cnf)
-	core.Validator.RegisterValidation("phone", utils2.ValidatePhoneNumber)
 	uparser := utils.Raise(uaparser.New("./config/regexes.yaml"))
 	logger := core.NewLogger(cnf.Logger)
 	app.Use(middleware.Cors(&cnf.Cors))
-	app.Use(middleware.BotDetection(uparser))
 	redisClient := core.NewRedis(cnf.Redis)
-	app.Use(middleware.JWTAuth(middleware.JWTAuthConfig{
-		RefreshCnf:   cnf.RefreshJWT,
-		AccessCnf:    cnf.AccessJWT,
-		Redis:        redisClient,
-		Uaparser:     uparser,
-		ExcludePaths: cnf.JWTAuth.ExcludePaths,
-	}))
 	app.Use(middleware.Logger(func(vo middleware.LogVO) {
 		v, _ := core.MarshalForFiber(vo)
 		if vo.Code == http.StatusOK {
@@ -49,12 +36,6 @@ func main() {
 			logger.Error(string(v))
 		}
 	}))
-	if core.Mode() != core.ProMode {
-		app.Use(middleware.Cache())
-	}
-	app.Use(middleware.I18n(cnf.I18n))
-	app.Use(middleware.Response())
-	app.Use(middleware.Compress())
 	mysql := core.NewGormMysql(cnf.Mysql)
 	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
 	fmt.Println("数据库自动迁移完成")
@@ -78,7 +59,5 @@ func main() {
 		return redisClient
 	}))
 	utils.RaiseVoid(example.ExampleModuleSetup(container))
-	utils.RaiseVoid(auth.AuthModuleSetup(container))
-	utils.RaiseVoid(common.CommonModuleSetup(container))
 	core.StartApp(app)
 }
