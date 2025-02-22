@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"jsonix-kit/apps/example"
-	"jsonix-kit/auto_migrate"
+
+	// "jsonix-kit/auto_migrate"
 	"jsonix-kit/middleware"
 	"net/http"
 
@@ -43,8 +44,9 @@ func main() {
 	utils.RaiseVoidByErrorHandler(err, func(err error) error {
 		return fmt.Errorf("数据库连接失败: %w", err)
 	})
-	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
-	fmt.Println("数据库自动迁移完成")
+	// 如需迁移数据库，请先在根目录运行 `jsonix migrate` 再取消注释
+	// utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
+	// fmt.Println("数据库自动迁移完成")
 	container := dig.New()
 	utils.RaiseVoid(container.Provide(func() *zap.Logger {
 		return logger
