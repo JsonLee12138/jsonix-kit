@@ -27,7 +27,10 @@ func main() {
 	uparser := utils.Raise(uaparser.New("./config/regexes.yaml"))
 	logger := core.NewLogger(cnf.Logger)
 	app.Use(middleware.Cors(&cnf.Cors))
-	redisClient := utils.Raise(core.NewRedis(cnf.Redis))
+	redisClient, err := core.NewRedis(cnf.Redis)
+	utils.RaiseVoidByErrorHandler(err, func(err error) error {
+		return fmt.Errorf("redis连接失败: %w", err)
+	})
 	app.Use(middleware.Logger(func(vo middleware.LogVO) {
 		v, _ := core.MarshalForFiber(vo)
 		if vo.Code == http.StatusOK {
@@ -36,7 +39,10 @@ func main() {
 			logger.Error(string(v))
 		}
 	}))
-	mysql := utils.Raise(core.NewGormMysql(cnf.Mysql))
+	mysql, err := core.NewGormMysql(cnf.Mysql)
+	utils.RaiseVoidByErrorHandler(err, func(err error) error {
+		return fmt.Errorf("数据库连接失败: %w", err)
+	})
 	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
 	fmt.Println("数据库自动迁移完成")
 	container := dig.New()
