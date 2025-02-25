@@ -16,5 +16,11 @@
       "request": "launch",
       "type": "node-terminal"
     },
+    {
+      "command": "jsonix migrate",
+      "name": "generate migrate",
+      "request": "launch",
+      "type": "node-terminal"
+    },
   ]
 }
