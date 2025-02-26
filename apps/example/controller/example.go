@@ -15,6 +15,13 @@ func NewExampleController(service *service.ExampleService) *ExampleController {
 	}
 }
 
+// @Summary HelloWorld
+// @Description HelloWorld
+// @Tags example
+// @Accept json
+// @Produce json
+// @Success 200 {string} string "Hello World"
+// @Router /example [get]
 func (c *ExampleController) HelloWorld(ctx *fiber.Ctx) error {
 	return ctx.SendString(c.service.HelloWorld())
 }

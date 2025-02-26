@@ -150,7 +150,7 @@ mysql:
   config: ""
   # 主机
   # host
-  host: ""
+  host: 127.0.0.1
   # 端口
   # port
   port: 3306
