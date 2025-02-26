@@ -2,10 +2,8 @@ module jsonix-kit
 
 go 1.23.0
 
-replace github.com/JsonLee12138/jsonix => ../jsonix
 require (
-	github.com/JsonLee12138/jsonix v0.0.0-00010101000000-000000000000
-	//github.com/JsonLee12138/jsonix v0.0.6
+	github.com/JsonLee12138/jsonix v0.0.9
 	github.com/go-playground/validator/v10 v10.25.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/contrib/fiberi18n/v2 v2.0.5
