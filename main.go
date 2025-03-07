@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"jsonix-kit/apps/example"
 
-	"jsonix-kit/auto_migrate"
+	// 使用自动迁移sql之前需要先允许命令`jsonix migrate`
+	//"jsonix-kit/auto_migrate"
 	"jsonix-kit/middleware"
 	"net/http"
 
@@ -52,7 +53,7 @@ func main() {
 		return fmt.Errorf("❌ Database connection failure: %w", err)
 	})
 	// 如需迁移数据库，请先在根目录运行 `jsonix migrate` 再取消注释
-	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
+	//utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
 	fmt.Println("✅ Automated database migration completed")
 	container := dig.New()
 	utils.RaiseVoid(container.Provide(func() *zap.Logger {
