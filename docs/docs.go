@@ -96,6 +96,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/common/dict/${code}/values": {
+            "get": {
+                "description": "获取字典值列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "summary": "获取字典值列表",
+                "parameters": [
+                    {
+                        "enum": [
+                            "sys_user_sex",
+                            "sys_user_status"
+                        ],
+                        "type": "string",
+                        "description": "字典类型编码",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.BaseResponseVO"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/entity.DictItem"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/common/dict/types": {
             "get": {
                 "description": "获取字典类型",
@@ -112,20 +163,22 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "id",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "name": "id",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "code",
-                        "name": "code",
+                        "name": "name",
                         "in": "query"
                     },
                     {
-                        "type": "string",
-                        "description": "name",
-                        "name": "name",
+                        "type": "boolean",
+                        "name": "status",
                         "in": "query"
                     }
                 ],
@@ -152,10 +205,75 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "新增字典类型",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "common"
+                ],
+                "summary": "新增字典类型",
+                "parameters": [
+                    {
+                        "description": "新增字典类型信息",
+                        "name": "createDictTypeDTO",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateDictTypeDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.BaseResponseVO"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entity.DictType"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "dto.CreateDictTypeDTO": {
+            "type": "object",
+            "required": [
+                "code",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
         "dto.UsernameLoginWithCaptchaDTO": {
             "type": "object",
             "properties": {

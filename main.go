@@ -5,7 +5,7 @@ import (
 	"json-server-kit/apps/auth"
 	"json-server-kit/apps/common"
 	"json-server-kit/apps/example"
-	auto_migrate "json-server-kit/auto_migrate_local"
+	"json-server-kit/auto_migrate"
 	"json-server-kit/middleware"
 	"net/http"
 
@@ -33,7 +33,10 @@ func main() {
 	logger := core.NewLogger(cnf.Logger)
 	app.Use(middleware.Cors(&cnf.Cors))
 	app.Use(middleware.BotDetection(uparser))
-	redisClient := core.NewRedis(cnf.Redis)
+	redisClient, err := core.NewRedis(cnf.Redis)
+	utils.RaiseVoidByErrorHandler(err, func(err error) error {
+		return fmt.Errorf("redis connection failure: %w", err)
+	})
 	app.Use(middleware.JWTAuth(middleware.JWTAuthConfig{
 		RefreshCnf:   cnf.RefreshJWT,
 		AccessCnf:    cnf.AccessJWT,
@@ -55,7 +58,10 @@ func main() {
 	app.Use(middleware.I18n(cnf.I18n))
 	app.Use(middleware.Response())
 	app.Use(middleware.Compress())
-	mysql := core.NewGormMysql(cnf.Mysql)
+	mysql, err := core.NewGormMysql(cnf.Mysql)
+	utils.RaiseVoidByErrorHandler(err, func(err error) error {
+		return fmt.Errorf("mysql connection failure: %w", err)
+	})
 	utils.RaiseVoid(auto_migrate.AutoMigrate(mysql))
 	fmt.Println("数据库自动迁移完成")
 	container := dig.New()

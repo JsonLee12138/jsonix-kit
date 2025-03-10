@@ -20,6 +20,10 @@ func (s *DictService) GetDictTypes(params dto.DictTypeQuery) ([]entity.DictType,
 	return s.dictRepository.GetDictTypes(params)
 }
 
+func (s *DictService) CreateDictType(body dto.CreateDictTypeDTO) (entity.DictType, error) {
+	return s.dictRepository.CreateDictType(body)
+}
+
 func (s *DictService) GetDictItems(code string) ([]entity.DictItem, error) {
 	return s.dictRepository.GetDictItemsByType(code)
 }

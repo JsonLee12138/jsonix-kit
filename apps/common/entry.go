@@ -31,6 +31,7 @@ func ProvideRepository(scope *dig.Scope) error {
 func RouterSetup(app *fiber.App, dictController *controller.DictController) {
 	group := app.Group("common")
 	group.Get("/dict/types", dictController.GetDictTypes)
+	group.Post("/dict/types", dictController.CreateDictType)
 }
 
 func CommonModuleSetup(container *dig.Container) error {

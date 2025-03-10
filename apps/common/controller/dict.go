@@ -24,9 +24,7 @@ func NewDictController(DictService *service.DictService) *DictController {
 // @Tags common
 // @Accept json
 // @Produce json
-// @Param id query string false "id"
-// @Param code query string false "code"
-// @Param name query string false "name"
+// @Param dictTypeQuery query dto.DictTypeQuery true "字典查询条件"
 // @Success 200 {object} utils.BaseResponseVO{data=[]entity.DictType}
 // @Router /common/dict/types [get]
 func (c *DictController) GetDictTypes(ctx *fiber.Ctx) error {
@@ -42,16 +40,37 @@ func (c *DictController) GetDictTypes(ctx *fiber.Ctx) error {
 	return nil
 }
 
+// @Summary 新增字典类型
+// @Description 新增字典类型
+// @Tags common
+// @Accept json
+// @Produce json
+// @Param createDictTypeDTO body dto.CreateDictTypeDTO true "新增字典类型信息"
+// @Success 200 {object} utils.BaseResponseVO{data=entity.DictType}
+// @Router /common/dict/types [post]
+func (c *DictController) CreateDictType(ctx *fiber.Ctx) error {
+	var body dto.CreateDictTypeDTO
+	if err := ctx.BodyParser(&body); err != nil {
+		return utils.NewBadParameters()
+	}
+	res, err := c.DictService.CreateDictType(body)
+	if err != nil {
+		return errors.New(err.Error())
+	}
+	ctx.Locals("data", res)
+	return nil
+}
+
 // @Summary 获取字典值列表
 // @Description 获取字典值列表
 // @Tags common
 // @Accept json
 // @Produce json
-// @Param code query string false "code"
+// @Param code path string true "字典类型编码" Enums(sys_user_sex,sys_user_status)
 // @Success 200 {object} utils.BaseResponseVO{data=[]entity.DictItem}
-// @Router /common/dict/values [get]
+// @Router /common/dict/${code}/values [get]
 func (c *DictController) GetDictValues(ctx *fiber.Ctx) error {
-	code := ctx.Query("code")
+	code := ctx.Params("code")
 	if code == "" {
 		return utils.NewBadParameters()
 	}

@@ -1,4 +1,18 @@
 definitions:
+  dto.CreateDictTypeDTO:
+    properties:
+      code:
+        type: string
+      desc:
+        type: string
+      name:
+        type: string
+      status:
+        type: boolean
+    required:
+    - code
+    - name
+    type: object
   dto.UsernameLoginWithCaptchaDTO:
     properties:
       captcha:
@@ -201,24 +215,55 @@ paths:
       summary: 用户名密码登录
       tags:
       - auth
+  /common/dict/${code}/values:
+    get:
+      consumes:
+      - application/json
+      description: 获取字典值列表
+      parameters:
+      - description: 字典类型编码
+        enum:
+        - sys_user_sex
+        - sys_user_status
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponseVO'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.DictItem'
+                  type: array
+              type: object
+      summary: 获取字典值列表
+      tags:
+      - common
   /common/dict/types:
     get:
       consumes:
       - application/json
       description: 获取字典类型
       parameters:
-      - description: id
-        in: query
-        name: id
-        type: string
-      - description: code
-        in: query
+      - in: query
         name: code
         type: string
-      - description: name
-        in: query
+      - in: query
+        name: id
+        type: integer
+      - in: query
         name: name
         type: string
+      - in: query
+        name: status
+        type: boolean
       produces:
       - application/json
       responses:
@@ -234,6 +279,32 @@ paths:
                   type: array
               type: object
       summary: 获取字典类型
+      tags:
+      - common
+    post:
+      consumes:
+      - application/json
+      description: 新增字典类型
+      parameters:
+      - description: 新增字典类型信息
+        in: body
+        name: createDictTypeDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateDictTypeDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponseVO'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.DictType'
+              type: object
+      summary: 新增字典类型
       tags:
       - common
 swagger: "2.0"

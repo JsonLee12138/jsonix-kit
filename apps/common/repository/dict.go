@@ -36,6 +36,19 @@ func (r *DictRepository) GetDictTypes(params dto.DictTypeQuery) ([]entity.DictTy
 	return dictTypes, nil
 }
 
+func (r *DictRepository) CreateDictType(body dto.CreateDictTypeDTO) (entity.DictType, error) {
+	dictType := entity.DictType{
+		Code:   body.Code,
+		Name:   body.Name,
+		Status: body.Status,
+		Desc:   body.Desc,
+	}
+	if err := r.db.Create(&dictType).Error; err != nil {
+		return entity.DictType{}, err
+	}
+	return dictType, nil
+}
+
 func (r *DictRepository) GetDictTypeById(id uint) (entity.DictType, error) {
 	var dictType entity.DictType
 	if err := r.db.Where("id = ?", id).First(&dictType).Preload("Items").Error; err != nil {
